@@ -14,7 +14,7 @@
    <testCaseLink>
       <guid>67e150e7-d6c1-4380-8e4f-696558567c9d</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-MultiFileOperations</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
@@ -54,7 +54,7 @@
    <testCaseLink>
       <guid>b9fcc341-1409-4a24-a5a3-4b1828a90f7f</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-FolderOperations</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
@@ -100,7 +100,7 @@
    <testCaseLink>
       <guid>7e845faf-e890-4be9-baa3-f07c4dba1c71</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-AddJobFiles</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
@@ -131,7 +131,7 @@
    <testCaseLink>
       <guid>d69712fe-4c49-49b0-9d26-da5e0cdabea6</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-FileViewerOps</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
@@ -177,7 +177,7 @@
    <testCaseLink>
       <guid>b1c73871-9c46-4945-8946-10b98fbaad55</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-AddJobScriptOption</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
@@ -232,7 +232,7 @@
    <testCaseLink>
       <guid>58ab924e-bd61-4de6-a970-3841e7ccba0d</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-InvalidPath</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
@@ -263,7 +263,7 @@
    <testCaseLink>
       <guid>1d9cf045-389a-43ab-b6e7-401489c4f6d6</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-switchApplication</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
@@ -306,7 +306,7 @@
    <testCaseLink>
       <guid>8069fdf6-a7e8-4a98-a069-6b490517dd12</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-VerifyLabel</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
@@ -383,7 +383,7 @@
    <testCaseLink>
       <guid>e8d398ba-7706-492c-bb9c-2b1bd4be8ffe</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmissionForLastSubmitted</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
@@ -447,7 +447,7 @@
    <testCaseLink>
       <guid>365bc496-2a6c-4edb-852f-22b91da13358</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission_LeaveForm</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
@@ -481,7 +481,7 @@
    <testCaseLink>
       <guid>3eb5a10a-9972-4dc8-bdb8-cc05a8b66d21</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/MultipleJobSubmissions</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
@@ -506,7 +506,7 @@
    <testCaseLink>
       <guid>b343cf64-59cb-478e-b7d7-197d3d3f3f72</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/JobSubmission/JobSubmission-NavigatingPreviousFolder</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>

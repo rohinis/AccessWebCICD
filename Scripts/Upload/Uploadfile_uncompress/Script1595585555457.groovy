@@ -7,20 +7,21 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.util.KeywordUtil
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
 
 import org.openqa.selenium.Keys as Keys
 
 import internal.GlobalVariable as GlobalVariable
 
-//====================================================================================
-ReportFile = (GlobalVariable.G_ReportName + '.html')
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-def extentTest = extent.startTest(TestCaseName)
+//==================================================================
+def Browser = GlobalVariable.G_Browser
+//===============================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//===========================================================
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
-//=====================================================================================
+//=============================================================
 
 WebUI.delay(2)
 try
@@ -33,7 +34,7 @@ try
 		if (isElemenetPresent)
 		{
 			WebUI.click(findTestObject('GenericObjects/TitleLink_Files'))
-			extentTest.log(LogStatus.PASS, "Navigated to Files Tab" )
+			extentTest.log(Status.PASS, "Navigated to Files Tab" )
 		}
 
 */
@@ -46,7 +47,7 @@ try
 			WebUI.setText(findTestObject('Object Repository/FilesPage/textBx_FilePath'), location)
 		
 			WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
-			extentTest.log(LogStatus.PASS, 'Navigated to /stage/JSUploads in RFB ')*/
+			extentTest.log(Status.PASS, 'Navigated to /stage/JSUploads in RFB ')*/
 	CustomKeywords.'generateFilePath.filePath.navlocation'(location, extentTest)
 	
 	WebUI.delay(2)
@@ -63,7 +64,7 @@ try
 	
     def msg= WebUI.verifyElementPresent(findTestObject('2020.1/Verify_unzip_message'), 3)
 	if(msg)
-		extentTest.log(LogStatus.PASS, 'verify the unzip message')
+		extentTest.log(Status.PASS, 'verify the unzip message')
 	
 	WebUI.click(findTestObject('2020.1/Cancel_button'))
 	
@@ -75,7 +76,7 @@ try
 			
 			msg =WebUI.click(findTestObject('2020.1/Uncompress'))
 			if(msg)
-				extentTest.log(LogStatus.PASS, 'verify the uncompress message')
+				extentTest.log(Status.PASS, 'verify the uncompress message')
 			
 
 	
@@ -87,26 +88,30 @@ try
 	
 	
 }
-catch (Exception  ex)
-{
+catch (Exception ex) {
+	println('From TC - ' + GlobalVariable.G_ReportFolder)
 
-	String screenShotPath='ExtentReports/'+TestCaseName+GlobalVariable.G_Browser+'.png'
+	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
 	WebUI.takeScreenshot(screenShotPath)
-	extentTest.log(LogStatus.FAIL,ex)
-	KeywordUtil.markFailed('ERROR: '+ e)
-}
-catch (StepErrorException  e)
-{
 
-	String screenShotPath='ExtentReports/'+TestCaseName+GlobalVariable.G_Browser+'.png'
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
+}
+catch (StepErrorException e) {
+	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
 	WebUI.takeScreenshot(screenShotPath)
-	extentTest.log(LogStatus.FAIL,e)
-	KeywordUtil.markFailed('ERROR: '+ e)
-}
-finally
-{
 
-	extent.endTest(extentTest);
-	extent.flush();
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
 
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
+finally {
+	extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
+	}

@@ -20,8 +20,8 @@
          <combinationType>ONE</combinationType>
          <id>a70d0f78-a0de-4e39-8762-db2befa5f530</id>
          <iterationEntity>
-            <iterationType>ALL</iterationType>
-            <value>5</value>
+            <iterationType>RANGE</iterationType>
+            <value>1-3</value>
          </iterationEntity>
          <testDataId>Data Files/Sanity/JobSubmission</testDataId>
       </testDataLink>

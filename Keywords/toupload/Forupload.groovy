@@ -20,7 +20,9 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.webui.keyword.internal.WebUIAbstractKeyword
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import com.relevantcodes.extentreports.LogStatus
+
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 import org.openqa.selenium.Keys
 import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
 
@@ -49,9 +51,9 @@ public class Forupload {
 		}
 
 		WebUI.uploadFile(uploadInput, folderPath)
-		extentTest.log(LogStatus.PASS, 'Uploading the Folder ::  '+ InputFolder)
+		extentTest.log(Status.PASS, 'Uploading the Folder ::  '+ InputFolder)
 
-		extentTest.log(LogStatus.PASS, 'Click on the Notification tab')
+		extentTest.log(Status.PASS, 'Click on the Notification tab')
 
 		WebUI.click(findTestObject('Landing_Page/Btn_Notifiction'))
 		WebUI.delay(3)
@@ -59,7 +61,7 @@ public class Forupload {
 		isNotificationPresent=WebUI.waitForElementPresent(findTestObject('Notificactions/Notification_FolderUpload'), 5)
 		println("notification status - "+isNotificationPresent)
 		result=isNotificationPresent
-		extentTest.log(LogStatus.PASS, 'Folder has been uploaded successfully')
+		extentTest.log(Status.PASS, 'Folder has been uploaded successfully')
 
 		WebUI.delay(2)
 		WebUI.click(findTestObject('Object Repository/Notificactions/close_icon_upload_popup'))
@@ -89,8 +91,9 @@ public class Forupload {
 		//	WebUI.delay(2)
 		//WebUI.mouseOver(Foldername)
 		WebUI.doubleClick(Foldername)
+		WebUI.delay(2)
 
-		extentTest.log(LogStatus.PASS, 'Navigate inside the folder by Double-click ')
+		extentTest.log(Status.PASS, 'Navigate inside the folder by Double-click ')
 		String [] JobFiles = [
 			'ToDelete.txt',
 			'ToOpen.txt',
@@ -105,13 +108,13 @@ public class Forupload {
 			String JF =JobFiles[x]
 
 			println(JF)
-			TestObject newJobFile = WebUI.modifyObjectProperty(findTestObject('JobSubmissionForm/File_InputFile'), 'data-automation-id', 'equals',JF, true)
+			TestObject newJobFile = WebUI.modifyObjectProperty(findTestObject('Object Repository/FilesPage/FolderRowItem_TileView'), 'data-automation-id', 'equals',JF, true)
 			WebUI.verifyElementPresent(newJobFile, 5)
 			x++
 		}
 		println("x==="+ x)
 		if(x==7)
-			extentTest.log(LogStatus.PASS, 'All the Files and Folders are present inside the Folder ')
+			extentTest.log(Status.PASS, 'All the Files and Folders are present inside the Folder ')
 	}
 }
 

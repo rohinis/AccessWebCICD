@@ -14,7 +14,7 @@
    <testCaseLink>
       <guid>c39c1232-201a-40a7-99cb-07a1cf598e0c</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
+      <isRun>false</isRun>
       <testCaseId>Test Cases/Access_Management/Access_management</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
@@ -66,7 +66,7 @@
    <testCaseLink>
       <guid>62c945a7-9462-4550-8502-17409ae8889d</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/Access_Management/Access_managementNewtest cases</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>

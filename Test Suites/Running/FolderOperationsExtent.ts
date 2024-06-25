@@ -21,7 +21,7 @@
          <id>41e4f676-9528-4518-900a-9ad376c718e4</id>
          <iterationEntity>
             <iterationType>ALL</iterationType>
-            <value>5</value>
+            <value>6</value>
          </iterationEntity>
          <testDataId>Data Files/Regression/TestDataForFolderOperations</testDataId>
       </testDataLink>
@@ -60,7 +60,7 @@
          <combinationType>ONE</combinationType>
          <id>2f3e7c47-fdc6-4aca-b414-531bc56b5c02</id>
          <iterationEntity>
-            <iterationType>SPECIFIC</iterationType>
+            <iterationType>RANGE</iterationType>
             <value>1-10</value>
          </iterationEntity>
          <testDataId>Data Files/Regression/TestDataForFolderOperations</testDataId>
@@ -206,6 +206,13 @@
       <guid>fd8bdae7-9b54-4bae-9cdb-c6951d284219</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
+      <iterationNameVariable>
+         <defaultValue>'No'</defaultValue>
+         <description></description>
+         <id>555d4820-0788-4d6c-8962-ab94782f3455</id>
+         <masked>false</masked>
+         <name>userChoice</name>
+      </iterationNameVariable>
       <testCaseId>Test Cases/FilesModule/UnzipOnUpload</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
@@ -214,7 +221,7 @@
             <iterationType>SPECIFIC</iterationType>
             <value>1-7</value>
          </iterationEntity>
-         <testDataId>Data Files/TestDataForGenericFilesOps</testDataId>
+         <testDataId>Data Files/Regression/TestDataForGeneric_Actions</testDataId>
       </testDataLink>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
@@ -314,7 +321,7 @@
          <id>6de06c28-6991-4210-952b-47a77fa554d7</id>
          <iterationEntity>
             <iterationType>ALL</iterationType>
-            <value>11</value>
+            <value>1</value>
          </iterationEntity>
          <testDataId>Data Files/Regression/TestDataForCreateFolder</testDataId>
       </testDataLink>

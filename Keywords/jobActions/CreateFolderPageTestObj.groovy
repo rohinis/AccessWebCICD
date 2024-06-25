@@ -9,7 +9,9 @@ import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType as ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 import internal.GlobalVariable
 
@@ -62,7 +64,7 @@ public class CreateFolderPageTestObj {
 		println(fileNew)
 		WebUI.setText(findTestObject('FilesPage/FilesSearch_filter'), fileNew)
 		WebUI.sendKeys(findTestObject('JobDetailsPage/TextBx_DetailsFilter'), Keys.chord(Keys.ENTER))
-		extentTest.log(LogStatus.PASS, 'Looking for archived file, search text entered - '+fileNew)
+		extentTest.log(Status.PASS, 'Looking for archived file, search text entered - '+fileNew)
 		WebUI.delay(2)
 		if(TestCaseName.contains('tile view')) {
 
@@ -73,9 +75,8 @@ public class CreateFolderPageTestObj {
 			compressedFileObjIdentifierTV.addProperty('xpath', ConditionType.EQUALS, xpath_compressedfileXpathTV)
 			String CompressTitle=WebUI.getAttribute(compressedFileObjIdentifierTV,'title')
 			def newEmelemt=(new customWait.WaitForElement()).WaitForelementPresent(compressedFileObjIdentifierTV, 5,extentTest, 'Compressed File')
-			if(newEmelemt)
-			{
-				extentTest.log(LogStatus.PASS, ' Verified the compresed file - '+CompressTitle)
+			if(newEmelemt) {
+				extentTest.log(Status.PASS, ' Verified the compresed file - '+CompressTitle)
 			}
 			println("==========================================================")
 			println(CompressTitle)
@@ -91,9 +92,8 @@ public class CreateFolderPageTestObj {
 			compressedFileObjIdentifierLatest.addProperty('xpath', ConditionType.EQUALS, xpath_compressedfileXpath)
 			String CompressTitle=WebUI.getAttribute(compressedFileObjIdentifierLatest,'textContent')
 			def newEmelemt=(new customWait.WaitForElement()).WaitForelementPresent(compressedFileObjIdentifierLatest, 5,extentTest, 'Compressed File')
-			if(newEmelemt)
-			{
-				extentTest.log(LogStatus.PASS, ' Verified the compresed file - '+CompressTitle)
+			if(newEmelemt) {
+				extentTest.log(Status.PASS, ' Verified the compresed file - '+CompressTitle)
 			}
 			println("==========================================================")
 			println(CompressTitle)
@@ -155,7 +155,7 @@ public class CreateFolderPageTestObj {
 			WebUI.rightClick(newFileObj)
 		}
 
-		extentTest.log(LogStatus.PASS, 'Right clicked on compressed file - '+CompressedFileName+' to invoke contextmenu' )
+		extentTest.log(Status.PASS, 'Right clicked on compressed file - '+CompressedFileName+' to invoke contextmenu' )
 
 		def isSubmitPresent=(new customWait.WaitForElement()).WaitForelementPresent(findTestObject('JobSubmissionForm/button_Submit_Job'), 3,extentTest, 'Submit Button')
 		if(isSubmitPresent){
@@ -166,17 +166,17 @@ public class CreateFolderPageTestObj {
 			WebUI.click(newFileOp)
 		}
 		WebUI.delay(2)
-		extentTest.log(LogStatus.PASS, 'Clicked on Delete menu item on compressed file - '+CompressedFileName)
+		extentTest.log(Status.PASS, 'Clicked on Delete menu item on compressed file - '+CompressedFileName)
 
 		WebUI.click(findTestObject('GenericObjects/btn_Yes'))
 		WebUI.delay(2)
 
-		extentTest.log(LogStatus.PASS, 'Clicked on Yes on Delete confirmation pop-up ')
+		extentTest.log(Status.PASS, 'Clicked on Yes on Delete confirmation pop-up ')
 
 		TestObject newFolderObj=new TestObject('objectName')
 		newFolderObj.addProperty('xpath', ConditionType.EQUALS, FolderXpath)
 		def isElemenet=WebUI.verifyElementPresent(newFolderObj, 5, FailureHandling.CONTINUE_ON_FAILURE)
-		extentTest.log(LogStatus.PASS, ' Navigated into uncompressed folder - '+FolderName)
+		extentTest.log(Status.PASS, ' Navigated into uncompressed folder - '+FolderName)
 		WebUI.click(newFolderObj)
 		WebUI.doubleClick(newFolderObj)
 

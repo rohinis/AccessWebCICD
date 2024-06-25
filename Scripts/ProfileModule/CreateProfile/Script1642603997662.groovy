@@ -17,7 +17,8 @@ import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 import internal.GlobalVariable as GlobalVariable
 
@@ -26,14 +27,14 @@ WebDriver driver = DriverFactory.getWebDriver()
 EventFiringWebDriver eventFiring = ((DriverFactory.getWebDriver()) as EventFiringWebDriver)
 WebDriver wrappedWebDriver = eventFiring.getWrappedDriver()
 //RemoteWebDriver katalonWebDriver = ((wrappedWebDriver) as RemoteWebDriver)
-//====================================================================================
-ReportFile = (GlobalVariable.G_ReportName + '.html')
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-TestCaseName= TestCaseName + ' - '+proName
-def extentTest = extent.startTest(TestCaseName)
+
+//==================================================================
+def Browser = GlobalVariable.G_Browser
+//===============================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//===========================================================
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
-//=====================================================================================
+//=============================================================
 def navLocation = CustomKeywords.'generateFilePath.filePath.execLocation'()
 //====================================================================================
 
@@ -64,15 +65,15 @@ try
 	
 
 	if (GP) {
-		extentTest.log(LogStatus.PASS, 'Navigated to Job Submission For for - '+AppName)		}
+		extentTest.log(Status.PASS, 'Navigated to Job Submission For for - '+AppName)		}
 
 	else
 	{
-		extentTest.log(LogStatus.PASS, 'User not navigated to Job Submission For for - '+AppName)
+		extentTest.log(Status.PASS, 'User not navigated to Job Submission For for - '+AppName)
 	}
 
 
-	extentTest.log(LogStatus.PASS, 'Navigated to Job Submission For for - '+AppName)
+	extentTest.log(Status.PASS, 'Navigated to Job Submission For for - '+AppName)
 	def errorPanel = CustomKeywords.'customWait.WaitForElement.WaitForelementPresent'(findTestObject('JobSubmissionForm/JS_ErrorModalPanel'),2,extentTest,'ErrorPanel')
 
 	if (errorPanel) {
@@ -89,7 +90,7 @@ try
 
 	WebUI.setText(findTestObject('LoginPage/NewJobPage/List_Mem_WhiteTheam'), '120')
 
-	extentTest.log(LogStatus.PASS, 'Changed the value for NCPU and MEMORY fileds ')
+	extentTest.log(Status.PASS, 'Changed the value for NCPU and MEMORY fileds ')
 
 
 	switch(ProfileType)
@@ -105,13 +106,13 @@ try
 
 			//WebUI.setText(findTestObject('Object Repository/FilesPage/textBx_FilePath'), location)
 		//	WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
-			extentTest.log(LogStatus.PASS, 'Navigated to /stage/'+GlobalVariable.G_userName+'/ProfileFiles/ in RFB ')
+			extentTest.log(Status.PASS, 'Navigated to /stage/'+GlobalVariable.G_userName+'/ProfileFiles/ in RFB ')
 			//WebUI.delay(5)
 			def filePath = (RunConfiguration.getProjectDir() + '/Upload/JobFiles/') + InputFile
 			def newFP = CustomKeywords.'generateFilePath.filePath.getFilePath'(filePath)
 			println(newFP)
 			WebUI.uploadFile(findTestObject('Object Repository/JobSubmissionForm/LocalFileUploadElement'),newFP)
-			extentTest.log(LogStatus.PASS, 'Uploading File to RFB - '+InputFile)
+			extentTest.log(Status.PASS, 'Uploading File to RFB - '+InputFile)
 			//WebUI.delay(3)
 			break;
 
@@ -130,7 +131,7 @@ try
 			println('##################################################################')
 		//	WebUI.setText(findTestObject('Object Repository/FilesPage/textBx_FilePath'), fileLocation)
 		//	WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
-			extentTest.log(LogStatus.PASS, 'Navigated to /stage/InputDeck in RFB ')
+			extentTest.log(Status.PASS, 'Navigated to /stage/InputDeck in RFB ')
 			WebUI.waitForElementClickable(findTestObject('Object Repository/JobSubmissionForm/textBx_file_filter'), 10)
 			WebUI.waitForElementPresent(findTestObject('Object Repository/JobSubmissionForm/textBx_file_filter'), 5)
 			WebUI.click(findTestObject('Object Repository/JobSubmissionForm/textBx_file_filter'))
@@ -141,13 +142,13 @@ try
 					RemoteFile, true)
 			//WebUI.click(newFileObj)
 			WebUI.rightClick(newFileObj)
-			extentTest.log(LogStatus.PASS, 'Context Menu Invoked for Input File - ' + RemoteFile)
+			extentTest.log(Status.PASS, 'Context Menu Invoked for Input File - ' + RemoteFile)
 			//WebUI.delay(2)
 			String idForCntxtMn = 'Add as ' + FileArg
 			TestObject newRFBContextMnOption = WebUI.modifyObjectProperty(findTestObject('Object Repository/LoginPage/NewJobPage/ContextMenu_RFB_FilePicker'),
 					'id', 'equals', idForCntxtMn, true)
 			WebUI.click(newRFBContextMnOption)
-			extentTest.log(LogStatus.PASS, 'Selected Context Menu option - ' + idForCntxtMn)
+			extentTest.log(Status.PASS, 'Selected Context Menu option - ' + idForCntxtMn)
 			break;
 
 		case 'Incomplete':
@@ -176,8 +177,8 @@ try
 
 	WebUI.waitForElementPresent(findTestObject('LoginPage/NewJobPage/label_Save Profile'), 5)
 	//WebUI.delay(3)
-	extentTest.log(LogStatus.PASS, 'Clicked on Save As ')
-	extentTest.log(LogStatus.PASS, 'Entered profile name -  '+proName)
+	extentTest.log(Status.PASS, 'Clicked on Save As ')
+	extentTest.log(Status.PASS, 'Entered profile name -  '+proName)
 
 	//WebUI.clearText(findTestObject('LoginPage/NewJobPage/TxtBx_saveProfile'))
 	//WebUI.doubleClick(findTestObject('LoginPage/NewJobPage/TxtBx_saveProfile'))
@@ -197,23 +198,23 @@ try
 	{
 		println("inside cancel")
 		WebUI.click(findTestObject('Object Repository/LoginPage/NewJobPage/button_Cancel'))
-		extentTest.log(LogStatus.PASS, 'Clicked on Save As ')
-		extentTest.log(LogStatus.PASS, 'Entered profile name -  '+proName)
-		extentTest.log(LogStatus.PASS, 'Profile Creation Option Selected - '+ProfileType)
+		extentTest.log(Status.PASS, 'Clicked on Save As ')
+		extentTest.log(Status.PASS, 'Entered profile name -  '+proName)
+		extentTest.log(Status.PASS, 'Profile Creation Option Selected - '+ProfileType)
 		def isProfilePersentProCan = WebUI.verifyElementPresent(LeftNavAppIdentifier, 3,FailureHandling.CONTINUE_ON_FAILURE)
 		if(isProfilePersentProCan)
 		{
-			extentTest.log(LogStatus.PASS, 'Profile is not created - '+ proName)
+			extentTest.log(Status.PASS, 'Profile is not created - '+ proName)
 		}
 		else
 		{
-			extentTest.log(LogStatus.FAIL, 'Profile is created - '+ proName)
+			extentTest.log(Status.FAIL, 'Profile is created - '+ proName)
 		}
 	}
 
 	else
 	{
-		extentTest.log(LogStatus.PASS, 'Verified Test Case - AD-1509 Create Profile pop up validation.')
+		extentTest.log(Status.PASS, 'Verified Test Case - AD-1509 Create Profile pop up validation.')
 		WebUI.click(findTestObject('LoginPage/NewJobPage/button_Save'))
 		//WebUI.delay(3)
 		if(ProfileType.equals('Duplicate'))
@@ -230,17 +231,17 @@ try
 			println listElement.size()
 			if (listElement.size()<=1)
 			{
-				extentTest.log(LogStatus.PASS, 'Verified duplicate profile not created' )
+				extentTest.log(Status.PASS, 'Verified duplicate profile not created' )
 			}
 			else
 			{
-				extentTest.log(LogStatus.FAIL, 'Verified duplicate  profile created' )
-				extentTest.log(LogStatus.INFO, 'Profile list' )
+				extentTest.log(Status.FAIL, 'Verified duplicate  profile created' )
+				extentTest.log(Status.INFO, 'Profile list' )
 				String myText
 				for(int i =1;i<listElement.size();i++) {
 					RemoteWebElement ele = listElement.get(i)
 					myText=ele.getText()
-					extentTest.log(LogStatus.INFO, myText )
+					extentTest.log(Status.INFO, myText )
 
 				}
 
@@ -267,14 +268,14 @@ try
 					WebUI.click(findTestObject('Object Repository/JobMonitoringPage/button_Yes'))
 				//}
 				WebUI.click(LeftNavAppIdentifier)
-				extentTest.log(LogStatus.PASS, 'Verified newly created profile  -  '+proName)
-				extentTest.log(LogStatus.PASS, ('Verified ::  ' + TestCaseName) + ' :: Sucessfully')
+				extentTest.log(Status.PASS, 'Verified newly created profile  -  '+proName)
+				extentTest.log(Status.PASS, ('Verified ::  ' + TestCaseName) + ' :: Sucessfully')
 
 			}
 			else
 			{
 
-				extentTest.log(LogStatus.FAIL,  TestCaseName + ' :: failed')
+				extentTest.log(Status.FAIL,  TestCaseName + ' :: failed')
 			}
 		}
 	}
@@ -283,21 +284,32 @@ WebUI.disableSmartWait()
 	}
 	
 catch (Exception ex) {
+	println('From TC - ' + GlobalVariable.G_ReportFolder)
+
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
 	WebUI.takeScreenshot(screenShotPath)
+
 	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
-	extentTest.log(LogStatus.FAIL, ex)
-	extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(p))
+
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 catch (StepErrorException e) {
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
 	WebUI.takeScreenshot(screenShotPath)
-	extentTest.log(LogStatus.FAIL, e)
+
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 finally {
-	extentTest.log(LogStatus.PASS, 'Closing the browser after executinge test case - '+ TestCaseName)
-	extent.endTest(extentTest)
-	extent.flush()
+	extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
+	
+	
 }
-//=====================================================================================
 

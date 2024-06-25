@@ -15,7 +15,7 @@
             <runConfigurationId>Firefox (headless)</runConfigurationId>
          </configuration>
          <runEnabled>true</runEnabled>
-         <testSuiteEntity>Test Suites/Sanity_new/FilesModule-WithPreReq</testSuiteEntity>
+         <testSuiteEntity>Test Suites/Sanity_new/FilesModule-Set1</testSuiteEntity>
       </TestSuiteRunConfiguration>
       <TestSuiteRunConfiguration>
          <configuration>
@@ -25,7 +25,7 @@
             <runConfigurationId>Firefox (headless)</runConfigurationId>
          </configuration>
          <runEnabled>true</runEnabled>
-         <testSuiteEntity>Test Suites/Sanity_new/ProfileModule-WithPreReq</testSuiteEntity>
+         <testSuiteEntity>Test Suites/Sanity_new/ProfileModule</testSuiteEntity>
       </TestSuiteRunConfiguration>
       <TestSuiteRunConfiguration>
          <configuration>
@@ -35,7 +35,7 @@
             <runConfigurationId>Firefox (headless)</runConfigurationId>
          </configuration>
          <runEnabled>true</runEnabled>
-         <testSuiteEntity>Test Suites/Sanity_new/FolderModule-WithPreReq</testSuiteEntity>
+         <testSuiteEntity>Test Suites/Sanity_new/FolderModule</testSuiteEntity>
       </TestSuiteRunConfiguration>
       <TestSuiteRunConfiguration>
          <configuration>
@@ -45,7 +45,7 @@
             <runConfigurationId>Firefox (headless)</runConfigurationId>
          </configuration>
          <runEnabled>true</runEnabled>
-         <testSuiteEntity>Test Suites/Sanity_new/JobMonitoring-WithPreReq-AllJobs</testSuiteEntity>
+         <testSuiteEntity>Test Suites/Sanity_new/JobMonitoring-Filters</testSuiteEntity>
       </TestSuiteRunConfiguration>
    </testSuiteRunConfigurations>
 </TestSuiteCollectionEntity>

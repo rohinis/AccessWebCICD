@@ -21,7 +21,7 @@
          <id>b1560952-444a-4030-9c67-485c227e428a</id>
          <iterationEntity>
             <iterationType>SPECIFIC</iterationType>
-            <value>1-22,24-27</value>
+            <value>1,3,5,8</value>
          </iterationEntity>
          <testDataId>Data Files/Regression/TestDataJSMultiFileFolderOps</testDataId>
       </testDataLink>

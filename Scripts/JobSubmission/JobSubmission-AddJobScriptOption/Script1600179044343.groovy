@@ -12,7 +12,8 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.util.KeywordUtil as KeywordUtil
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus as LogStatus
+import com.aventstack.extentreports.Status
+import com.aventstack.extentreports.MediaEntityBuilder
 
 import internal.GlobalVariable as GlobalVariable
 //====================================================================================
@@ -22,10 +23,10 @@ WebDriver wrappedWebDriver = eventFiring.getWrappedDriver()
 RemoteWebDriver katalonWebDriver = (RemoteWebDriver) wrappedWebDriver
 //RemoteWebDriver katalonWebDriver = ((wrappedWebDriver) as RemoteWebDriver)
 //====================================================================================
-ReportFile = (GlobalVariable.G_ReportName + '.html')
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-def extentTest = extent.startTest(TestCaseName)
+def Browser = GlobalVariable.G_Browser
+//====================================================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//====================================================================================
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
 //=====================================================================================
 
@@ -42,7 +43,7 @@ try {
 
 
 
-	extentTest.log(LogStatus.PASS, 'Navigated Jobs Tab')
+	extentTest.log(Status.PASS, 'Navigated Jobs Tab')
 
 	WebUI.delay(2)
 
@@ -51,17 +52,17 @@ try {
 
 	WebUI.click(newAppObj)
 
-	extentTest.log(LogStatus.PASS, 'Navigated to Job Submission For for - ' + AppName)
+	extentTest.log(Status.PASS, 'Navigated to Job Submission For for - ' + AppName)
 
 	//	WebUI.doubleClick(newAppObj)
 	WebUI.delay(2)
 
-	def errorPanel = CustomKeywords.'customWait.WaitForElement.WaitForelementPresent'(findTestObject('JobSubmissionForm/JS_ErrorModalPanel'),
+	/*def errorPanel = CustomKeywords.'customWait.WaitForElement.WaitForelementPresent'(findTestObject('JobSubmissionForm/JS_ErrorModalPanel'),
 			2,extentTest,'ErrorPanel')
 
 	if (errorPanel) {
 		WebUI.click(findTestObject('Object Repository/JobSubmissionForm/button_Close'))
-	}
+	}*/
 
 	WebUI.click(findTestObject('Object Repository/LoginPage/NewJobPage/GenericProfile'))
 
@@ -94,7 +95,7 @@ try {
 
 		WebUI.rightClick(newFileObj)
 
-		extentTest.log(LogStatus.PASS, 'Right Clicked on Input file ' + InputFile)
+		extentTest.log(Status.PASS, 'Right Clicked on Input file ' + InputFile)
 
 		WebUI.delay(2)
 
@@ -106,7 +107,7 @@ try {
 
 		WebUI.click(newRFBContextMnOption)
 
-		extentTest.log(LogStatus.PASS, 'Clicked on context menu - ' + idForCntxtMn)
+		extentTest.log(Status.PASS, 'Clicked on context menu - ' + idForCntxtMn)
 	}
 
 	WebUI.click(findTestObject('JobSubmissionForm/RemoveFile'))
@@ -124,7 +125,7 @@ try {
 
 	WebUI.sendKeys(findTestObject('JobDetailsPage/TextBx_DetailsFilter'), Keys.chord(Keys.ENTER))
 
-	extentTest.log(LogStatus.PASS, 'Clicked on File  - ' + fileName)
+	extentTest.log(Status.PASS, 'Clicked on File  - ' + fileName)
 
 
 
@@ -143,18 +144,18 @@ try {
 	if (submitBtn) {
 		WebUI.click(findTestObject('JobSubmissionForm/button_Submit_Job'))
 
-		extentTest.log(LogStatus.PASS, 'Clicked on Submit Button ')
+		extentTest.log(Status.PASS, 'Clicked on Submit Button ')
 	}
 	
 	WebUI.waitForElementPresent(findTestObject('Notificactions/Notification_JobSubmission'), 5)
 
 	def jobText = WebUI.getText(findTestObject('Notificactions/Notification_JobSubmission'))
 
-	extentTest.log(LogStatus.PASS, 'Notification Generated')
+	extentTest.log(Status.PASS, 'Notification Generated')
 
 	GlobalVariable.G_JobID=CustomKeywords.'operations_JobsModule.GetJobRowDetails.getJobID'(jobText)
 
-	extentTest.log(LogStatus.PASS, 'Job ID - ' + GlobalVariable.G_JobID)
+	extentTest.log(Status.PASS, 'Job ID - ' + GlobalVariable.G_JobID)
 
 
 
@@ -173,8 +174,8 @@ catch (Exception ex) {
 
 
 	String p =TestCaseName+GlobalVariable.G_Browser+'.png'
-	extentTest.log(LogStatus.FAIL,ex)
-	extentTest.log(LogStatus.FAIL,extentTest.addScreenCapture(p))
+	extentTest.log(Status.FAIL,ex)
+	extentTest.log(Status.FAIL,extentTest.addScreenCapture(p))
 
 
 
@@ -182,22 +183,19 @@ catch (Exception ex) {
 }
 catch (StepErrorException e) {
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
-
+ 
 	WebUI.takeScreenshot(screenShotPath)
-
-
-	String p =TestCaseName+GlobalVariable.G_Browser+'.png'
-	extentTest.log(LogStatus.FAIL,ex)
-	extentTest.log(LogStatus.FAIL,extentTest.addScreenCapture(p))
-
-
-
-	KeywordUtil.markFailed('ERROR: ' + e)
+ 
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+ 
+	extentTest.log(Status.FAIL, ex)
+ 
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 finally {
-	extent.endTest(extentTest)
+	extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
 
-	extent.flush()
 }
+//=====================================================================================
 
 

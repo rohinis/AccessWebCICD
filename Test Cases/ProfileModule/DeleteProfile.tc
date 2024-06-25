@@ -23,12 +23,6 @@
       <value></value>
       <variableId>d45d70d8-f2f8-48b4-94fb-152c1a5ecfc0</variableId>
    </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>80a01f2c-5b41-48f6-9f20-46bfa5b35ead</variableId>
-   </variableLinks>
    <variable>
       <defaultValue>'set as default'</defaultValue>
       <description></description>
@@ -49,12 +43,5 @@
       <id>d45d70d8-f2f8-48b4-94fb-152c1a5ecfc0</id>
       <masked>false</masked>
       <name>AppName</name>
-   </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>80a01f2c-5b41-48f6-9f20-46bfa5b35ead</id>
-      <masked>false</masked>
-      <name>ProfileType</name>
    </variable>
 </TestCaseEntity>

@@ -8,7 +8,9 @@ import com.kms.katalon.core.exception.StepFailedException
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 import internal.GlobalVariable as GlobalVariable
 
@@ -43,7 +45,7 @@ public class ChangeView {
 					WebUI.refresh()
 				}
 				WebUI.click(viewIconList)
-				extentTest.log(LogStatus.PASS, 'Changed View to ListView')
+				extentTest.log(Status.PASS, 'Changed View to ListView')
 				WebUI.delay(2)
 			}
 
@@ -58,16 +60,16 @@ public class ChangeView {
 					WebUI.refresh()
 				}
 				WebUI.click(viewIconTile,FailureHandling.CONTINUE_ON_FAILURE)
-				extentTest.log(LogStatus.PASS, 'Changed View to Tile View as per the test case - ' +TestCaseName)
+				extentTest.log(Status.PASS, 'Changed View to Tile View as per the test case - ' +TestCaseName)
 			}
 
 			editIcon=(new customWait.WaitForElement()).WaitForelementPresent(findTestObject('Object Repository/FilesPage/GotoFoldericon'), 5,extentTest, 'Page Loaded')
 			if(editIcon) {
-				extentTest.log(LogStatus.PASS, 'Page loaded after changing the view')
+				extentTest.log(Status.PASS, 'Page loaded after changing the view')
 			}
 			else {
-				extentTest.log(LogStatus.PASS, 'Page not loaded after changing the view')
-				extentTest.log(LogStatus.PASS, 'Refreshing the browser ')
+				extentTest.log(Status.PASS, 'Page not loaded after changing the view')
+				extentTest.log(Status.PASS, 'Refreshing the browser ')
 				WebUI.refresh()
 				WebUI.delay(3)
 				int i
@@ -76,7 +78,7 @@ public class ChangeView {
 					try {
 						WebUI.verifyElementPresent(findTestObject('Object Repository/FilesPage/GotoFoldericon'), 1)
 						editIcon =WebUI.verifyElementClickable(findTestObject('Object Repository/FilesPage/GotoFoldericon'))
-						extentTest.log(LogStatus.PASS, 'Page is loaded now - took '+i+' secs')
+						extentTest.log(Status.PASS, 'Page is loaded now - took '+i+' secs')
 					}
 					catch (Exception  ex) {
 						println("Exception")
@@ -93,13 +95,13 @@ public class ChangeView {
 
 			String screenShotPath='ExtentReports/'+TestCaseName+GlobalVariable.G_Browser+'.png'
 			WebUI.takeScreenshot(screenShotPath)
-			extentTest.log(LogStatus.FAIL,ex)
+			extentTest.log(Status.FAIL,ex)
 		}
 		catch (StepErrorException  e) {
 
 			String screenShotPath='ExtentReports/'+TestCaseName+GlobalVariable.G_Browser+'.png'
 			WebUI.takeScreenshot(screenShotPath)
-			extentTest.log(LogStatus.FAIL,e)
+			extentTest.log(Status.FAIL,e)
 		}
 	}
 }

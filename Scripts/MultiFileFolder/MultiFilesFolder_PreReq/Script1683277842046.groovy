@@ -9,18 +9,20 @@ import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.util.KeywordUtil
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 import internal.GlobalVariable as GlobalVariable
 
 
-//====================================================================================
-ReportFile = 'PreReq-Report.html'
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-def extentTest = extent.startTest(TestCaseName)
+//==================================================================
+def Browser = GlobalVariable.G_Browser
+//===============================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//===========================================================
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
-//=====================================================================================
+//=============================================================
+
 def navLocation =CustomKeywords.'generateFilePath.filePath.execLocation'()
 def location=navLocation
 def jobID
@@ -32,19 +34,19 @@ try {
 	if (jobsTab) {
 		WebUI.click(findTestObject('GenericObjects/TitleLink_Jobs'))
 	}
-	extentTest.log(LogStatus.PASS, 'navigated to jobs tab')
+	extentTest.log(Status.PASS, 'navigated to jobs tab')
 	WebUI.click(findTestObject('Object Repository/JobMonitoringPage/a_Reset'))
 	TestObject newAppObj = WebUI.modifyObjectProperty(findTestObject('LoginPage/NewJobPage/AppList_ShellScript'), 'id', 'equals',
 			AppName, true)
 
 	WebUI.click(newAppObj)
-	extentTest.log(LogStatus.PASS, 'navigated to job submission page ')
+	extentTest.log(Status.PASS, 'navigated to job submission page ')
 
 	WebUI.delay(2)
 	WebUI.click(findTestObject('Object Repository/FilesPage/FilesSearch_filter'))
 	WebUI.setText(findTestObject('Object Repository/FilesPage/FilesSearch_filter'), "JS")
 	WebUI.sendKeys(findTestObject('Object Repository/FilesPage/FilesSearch_filter'), Keys.chord(Keys.ENTER))
-	extentTest.log(LogStatus.PASS, "Listed all the JS files")
+	extentTest.log(Status.PASS, "Listed all the JS files")
 	
 	
 	
@@ -106,27 +108,33 @@ try {
 	
 }
 catch (Exception ex) {
+	println('From TC - ' + GlobalVariable.G_ReportFolder)
+
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
 
 	WebUI.takeScreenshot(screenShotPath)
 
-	//extentTest.log(LogStatus.FAIL, ex)
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
 
-	KeywordUtil.markFailed('ERROR: ' + ex)
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 catch (StepErrorException e) {
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
 
 	WebUI.takeScreenshot(screenShotPath)
 
-	//extentTest.log(LogStatus.FAIL, e)
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
 
-	KeywordUtil.markFailed('ERROR: ' + e)
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 finally {
-	extent.endTest(extentTest)
-
-	extent.flush()
+	extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
+	
+	
 }
 
 

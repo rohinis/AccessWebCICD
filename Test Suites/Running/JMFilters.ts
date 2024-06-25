@@ -25,7 +25,7 @@
          </iterationEntity>
          <testDataId>Data Files/Regression/TestDataJobFiltersSave</testDataId>
       </testDataLink>
-      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+      <usingDataBindingAtTestSuiteLevel>false</usingDataBindingAtTestSuiteLevel>
       <variableLink>
          <testDataLinkId>1ecd16e6-f554-4e36-9aec-221ca4cfdf1f</testDataLinkId>
          <type>DATA_COLUMN</type>
@@ -332,6 +332,19 @@
       </variableLink>
    </testCaseLink>
    <testCaseLink>
+      <guid>6f429f4f-b195-46ee-af68-b7c223980863</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/Upload/Default_Filters</testCaseId>
+      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>e9ba3808-8b00-4693-ac33-8940ba7d6c26</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
       <guid>aad3736f-8715-4ffb-b6d9-46c228c2a90d</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
@@ -348,19 +361,6 @@
          <type>DEFAULT</type>
          <value></value>
          <variableId>edbdda98-3662-45dc-9cca-c374182f15b5</variableId>
-      </variableLink>
-   </testCaseLink>
-   <testCaseLink>
-      <guid>6f429f4f-b195-46ee-af68-b7c223980863</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
-      <testCaseId>Test Cases/Upload/Default_Filters</testCaseId>
-      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>e9ba3808-8b00-4693-ac33-8940ba7d6c26</variableId>
       </variableLink>
    </testCaseLink>
    <testCaseLink>

@@ -12,20 +12,25 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.util.KeywordUtil
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 import internal.GlobalVariable as GlobalVariable
 
-
+//==================================================================
+def Browser = GlobalVariable.G_Browser
+//===============================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//===========================================================
+CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
+//=============================================================
 
 WebDriver driver = DriverFactory.getWebDriver()
 EventFiringWebDriver eventFiring = ((DriverFactory.getWebDriver()) as EventFiringWebDriver)
 WebDriver wrappedWebDriver = eventFiring.getWrappedDriver()
 RemoteWebDriver katalonWebDriver = (RemoteWebDriver) wrappedWebDriver
 
-ReportFile = (GlobalVariable.G_ReportName + '.html')
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
+
 if(userChoice.equals('DoubleClick'))
 {
 	TestCaseName=TestCaseName+' - open file by Double Clicking on it'
@@ -36,9 +41,7 @@ else
 	TestCaseName=TestCaseName+' - open file through context menu open option'
 
 }
-def extentTest = extent.startTest(TestCaseName)
 
-CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
 
 
 
@@ -68,7 +71,7 @@ try {
 	if (filesTab) {
 		WebUI.click(findTestObject('GenericObjects/TitleLink_Files'))
 	}
-	extentTest.log(LogStatus.PASS, 'Navigated to Files Tab')
+	extentTest.log(Status.PASS, 'Navigated to Files Tab')
 
 	WebUI.delay(2)
 	println(TestCaseName)
@@ -92,9 +95,9 @@ try {
 		WebUI.waitForElementVisible(findTestObject('FilesPage/FilesSearch_filter'), 2)
 		println(fileName)
 		WebUI.setText(findTestObject('FilesPage/FilesSearch_filter'), fileName)
-		extentTest.log(LogStatus.PASS, 'Looking for file - '+fileName+' to perfrom operation - ' + TestOperation)
+		extentTest.log(Status.PASS, 'Looking for file - '+fileName+' to perfrom operation - ' + TestOperation)
 		WebUI.sendKeys(findTestObject('JobDetailsPage/TextBx_DetailsFilter'), Keys.chord(Keys.ENTER))
-		extentTest.log(LogStatus.PASS,'Searched the file by using Search box in the Files Page ')
+		extentTest.log(Status.PASS,'Searched the file by using Search box in the Files Page ')
 		
 
 
@@ -105,12 +108,12 @@ try {
 			WebUI.delay(2)
 			WebUI.waitForElementPresent(newFileObj, 3)
 			WebUI.click(newFileObj)
-			extentTest.log(LogStatus.PASS, 'Clicked on File  - ' + fileName)
+			extentTest.log(Status.PASS, 'Clicked on File  - ' + fileName)
 			if(userChoice.equals('DoubleClick'))
 			{
 
 				WebUI.doubleClick(newFileObj)
-				extentTest.log(LogStatus.PASS, 'Double clicked on file to open it ')
+				extentTest.log(Status.PASS, 'Double clicked on file to open it ')
 
 			}
 			else
@@ -119,10 +122,10 @@ try {
 				WebUI.click(newFileObj)
 				WebUI.delay(2)
 				WebUI.rightClick(newFileObj)
-				extentTest.log(LogStatus.PASS, 'RightClicked on File  - ' + fileName)
+				extentTest.log(Status.PASS, 'RightClicked on File  - ' + fileName)
 				WebUI.delay(2)
 				WebUI.click(findTestObject('FilesPage/ContextMenu_FileOperation_Open'))
-				extentTest.log(LogStatus.PASS, 'Clicked on Open menu item ')
+				extentTest.log(Status.PASS, 'Clicked on Open menu item ')
 				println('after is else ' + TestOperation)
 				WebUI.delay(3)
 
@@ -137,27 +140,40 @@ try {
 
 	if (result)
 	{
-		extentTest.log(LogStatus.PASS, ('Verified - ' + TestCaseName) + '  Sucessfully')
+		extentTest.log(Status.PASS, ('Verified - ' + TestCaseName) + '  Sucessfully')
 	} else {
-		extentTest.log(LogStatus.FAIL, TestCaseName + ' - failed')
+		extentTest.log(Status.FAIL, TestCaseName + ' - failed')
 	}
 WebUI.disableSmartWait()
 }
 catch (Exception ex) {
+	println('From TC - ' + GlobalVariable.G_ReportFolder)
+
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
 	WebUI.takeScreenshot(screenShotPath)
+
 	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
-	extentTest.log(LogStatus.FAIL, ex)
-	extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(p))
+
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 catch (StepErrorException e) {
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
 	WebUI.takeScreenshot(screenShotPath)
-	extentTest.log(LogStatus.FAIL, e)
+
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 finally {
-	extent.endTest(extentTest)
-	extent.flush()
+	extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
+	
+	
 }
 //=====================================================================================
 

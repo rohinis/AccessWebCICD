@@ -20,22 +20,21 @@ import org.openqa.selenium.Capabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 import com.kms.katalon.core.exception.StepErrorException as StepErrorException
 import com.kms.katalon.core.util.KeywordUtil
-import org.openqa.selenium.WebDriver as WebDriver
-import org.openqa.selenium.remote.RemoteWebDriver as RemoteWebDriver
 import org.openqa.selenium.support.events.EventFiringWebDriver as EventFiringWebDriver
 import java.awt.Robot
 import java.awt.event.KeyEvent as KeyEvent
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 
-
-
-
-
-ReportFile = (GlobalVariable.G_ReportName + '.html')
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-def extentTest = extent.startTest(TestCaseName)
+//==================================================================
+def Browser = GlobalVariable.G_Browser
+//===============================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//===========================================================
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
+//=============================================================
+
 
 def result=false
 WebUI.delay(2)
@@ -47,48 +46,49 @@ try
 
 	WebUI.mouseOver(findTestObject('Cluster_Registration/Manageservice'))
 	WebUI.click(findTestObject('Cluster_Registration/Manageservice'))
-	extentTest.log(LogStatus.PASS, 'Click on Manage Service')
+	extentTest.log(Status.PASS, 'Click on Manage Service')
 	WebUI.delay(2)
 	 
 	   
 		boolean ispresent=WebUI.verifyElementPresent(findTestObject('Cluster_Registration/Available'), 3, FailureHandling.CONTINUE_ON_FAILURE)
 		if(ispresent) {
-			extentTest.log(LogStatus.PASS, 'Verified the Server is available')
+			extentTest.log(Status.PASS, 'Verified the Server is available')
 			
 		}
 		else {
-			extentTest.log(LogStatus.FAIL, 'Failed to verify the server')
+			extentTest.log(Status.FAIL, 'Failed to verify the server')
 			
 		}
+		}
+		catch (Exception ex) {
+			println('From TC - ' + GlobalVariable.G_ReportFolder)
 		
+			String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
 		
+			WebUI.takeScreenshot(screenShotPath)
+		
+			String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+		
+			extentTest.log(Status.FAIL, ex)
+		
+			extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
+		}
+		catch (StepErrorException e) {
+			String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+		
+			WebUI.takeScreenshot(screenShotPath)
+		
+			String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+		
+			extentTest.log(Status.FAIL, ex)
+		
+			extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
+		}
+		finally {
+			extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
+			
+			
+		}
 
-}
-
-catch (Exception  ex)
-{
-
-	String screenShotPath='ExtentReports/'+TestCaseName+GlobalVariable.G_Browser+'.png'
-	WebUI.takeScreenshot(screenShotPath)
-	extentTest.log(LogStatus.FAIL,ex)
-	KeywordUtil.markFailed('ERROR: '+ e)
-
-}
-catch (StepErrorException  e)
-{
-
-	String screenShotPath='ExtentReports/'+TestCaseName+GlobalVariable.G_Browser+'.png'
-	WebUI.takeScreenshot(screenShotPath)
-	extentTest.log(LogStatus.FAIL,e)
-	KeywordUtil.markFailed('ERROR: '+ e)
-
-}
-finally
-{
-
-	extent.endTest(extentTest);
-	extent.flush();
-
-}
 
 

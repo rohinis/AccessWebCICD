@@ -8,15 +8,17 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.util.KeywordUtil as KeywordUtil
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+import com.aventstack.extentreports.Status
+import com.aventstack.extentreports.MediaEntityBuilder
 
 import internal.GlobalVariable as GlobalVariable
 //============================================================================//==
-ReportFile = (GlobalVariable.G_ReportName + '.html')
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-def extentTest = extent.startTest(TestCaseName)
+def Browser = GlobalVariable.G_Browser
+//====================================================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//====================================================================================
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
+
 //===============================================================================================
 
 try {
@@ -27,14 +29,14 @@ try {
 		WebUI.click(findTestObject('GenericObjects/TitleLink_Jobs'))
 	}
 
-	extentTest.log(LogStatus.PASS, 'Navigated Job Tab')
+	extentTest.log(Status.PASS, 'Navigated Job Tab')
 	WebUI.delay(2)
 
 	TestObject newAppObj = WebUI.modifyObjectProperty(findTestObject('LoginPage/NewJobPage/AppList_ShellScript'), 'id', 'equals',
 			AppName, true)
 
 	WebUI.click(newAppObj)
-	extentTest.log(LogStatus.PASS, 'Navigated to Job Submission For for - '+AppName)
+	extentTest.log(Status.PASS, 'Navigated to Job Submission For for - '+AppName)
 
 
 
@@ -64,20 +66,20 @@ try {
 	WebUI.setText(findTestObject('Object Repository/FilesPage/textBx_FilePath'), location)
 
 	WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
-	extentTest.log(LogStatus.PASS, 'Navigated to '+location)*/
+	extentTest.log(Status.PASS, 'Navigated to '+location)*/
 	CustomKeywords.'generateFilePath.filePath.navlocation'(location, extentTest)
 
 	//WebUI.click(findTestObject('2020.1/Stage_folder'))
 	/*boolean unityRightIcon=WebUI.verifyElementNotPresent(findTestObject('Object Repository/FilesPage/unity_right_icon'), 2)
 	if(unityRightIcon) {
 		
-		extentTest.log(LogStatus.PASS, 'Verified that unityRightIcon is not present')
+		extentTest.log(Status.PASS, 'Verified that unityRightIcon is not present')
 	}*/
 	
 	
 	//WebUI.verifyElementPresent(, 0)
 	
-	//extentTest.log(LogStatus.PASS, 'Navigated to previous folder')
+	//extentTest.log(Status.PASS, 'Navigated to previous folder')
 	
 	 location='/stage/'+GlobalVariable.G_userName
 	
@@ -86,20 +88,20 @@ try {
 	boolean unityRightIcon=WebUI.verifyElementNotPresent(findTestObject('Object Repository/FilesPage/unity_right_icon'), 2)
 	if(unityRightIcon) {
 		
-		extentTest.log(LogStatus.PASS, 'Verified that unityRightIcon is not present')
+		extentTest.log(Status.PASS, 'Verified that unityRightIcon is not present')
 	}
 
-	extentTest.log(LogStatus.PASS, 'Navigated to previous folder')
+	extentTest.log(Status.PASS, 'Navigated to previous folder')
 	
 	/*println(fileName)
 
 	WebUI.setText(findTestObject('FilesPage/FilesSearch_filter'), fileName)
 	
-	//extentTest.log(LogStatus.PASS, 'Looking for file to perfrom operation - ' +Operation)
+	//extentTest.log(Status.PASS, 'Looking for file to perfrom operation - ' +Operation)
 
 	WebUI.sendKeys(findTestObject('JobDetailsPage/TextBx_DetailsFilter'), Keys.chord(Keys.ENTER))
 
-	extentTest.log(LogStatus.PASS, 'Clicked on File  - ' + fileName)*/
+	extentTest.log(Status.PASS, 'Clicked on File  - ' + fileName)*/
 
 
 	
@@ -113,27 +115,31 @@ try {
 
 
 catch (Exception ex) {
+	println('From TC - ' + GlobalVariable.G_ReportFolder)
+ 
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
-
+ 
 	WebUI.takeScreenshot(screenShotPath)
-
-	extentTest.log(LogStatus.FAIL, ex)
-
-	//KeywordUtil.markFailed('ERROR: ' + e)
+ 
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+ 
+	extentTest.log(Status.FAIL, ex)
+ 
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 catch (StepErrorException e) {
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
-
+ 
 	WebUI.takeScreenshot(screenShotPath)
-
-	extentTest.log(LogStatus.FAIL, e)
-
-	KeywordUtil.markFailed('ERROR: ' + e)
+ 
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+ 
+	extentTest.log(Status.FAIL, ex)
+ 
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 finally {
-	extent.endTest(extentTest)
-
-	extent.flush()
+	extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
 
 
 }

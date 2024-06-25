@@ -82,20 +82,14 @@ public class CreateFolderPageTestObj {
 		String CheckStringforFileName=sfn[0]
 		println ("File size from Verify Compressed file - "+CheckStringforFileSize)
 		println ("File size from Verify Compressed name - "+CheckStringforFileName)
-		if (CheckStringforFileSize.contains("190"))
-		{
+		if (CheckStringforFileSize.contains("190")) {
 			println('true')
 			return CheckStringforFileName
 		}
-		else
-		{
+		else {
 			println('false')
 			return false
 		}
-
-
-
-
 	}
 
 
@@ -116,8 +110,4 @@ public class CreateFolderPageTestObj {
 
 		return true
 	}
-
-
-
-
 }

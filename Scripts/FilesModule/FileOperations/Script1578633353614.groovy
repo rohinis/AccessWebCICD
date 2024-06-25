@@ -4,7 +4,8 @@ import com.kms.katalon.core.exception.StepErrorException as StepErrorException
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus as LogStatus
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 import internal.GlobalVariable as GlobalVariable
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
@@ -18,15 +19,15 @@ import com.kms.katalon.core.testcase.TestCase as TestCase
 import com.kms.katalon.core.testdata.TestData as TestData
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
-ReportFile = (GlobalVariable.G_ReportName + '.html')
 
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-
-def extentTest = extent.startTest(TestCaseName)
-
+//==================================================================
+def Browser = GlobalVariable.G_Browser
+//===============================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//===========================================================
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
+//=============================================================
+
 
 TestObject newFileObj = null
 
@@ -50,7 +51,7 @@ try {
         WebUI.click(findTestObject('GenericObjects/TitleLink_Files'))
     }
     WebUI.enableSmartWait()
-    extentTest.log(LogStatus.PASS, 'Navigated to Files Tab')
+    extentTest.log(Status.PASS, 'Navigated to Files Tab')
 
    // WebUI.delay(2)
 
@@ -69,7 +70,7 @@ try {
 
 		WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
 
-		extentTest.log(LogStatus.PASS, 'Navigated to ' + location)*/
+		extentTest.log(Status.PASS, 'Navigated to ' + location)*/
     } else {
         CustomKeywords.'generateFilePath.filePath.navlocation'(location, extentTest)
 		
@@ -84,12 +85,12 @@ try {
 
         WebUI.setText(findTestObject('FilesPage/FilesSearch_filter'), fileName)
 
-        extentTest.log(LogStatus.PASS, (('Looking for file - ' + fileName) + ' to perfrom operation - ') + TestOperation)
+        extentTest.log(Status.PASS, (('Looking for file - ' + fileName) + ' to perfrom operation - ') + TestOperation)
 
         WebUI.sendKeys(findTestObject('JobDetailsPage/TextBx_DetailsFilter'), Keys.chord(Keys.ENTER))
 
-        extentTest.log(LogStatus.PASS, 'Found File  - ' + fileName)
-		extentTest.log(LogStatus.PASS,'Searched the file by using Search box in the Files Page ')
+        extentTest.log(Status.PASS, 'Found File  - ' + fileName)
+		extentTest.log(Status.PASS,'Searched the file by using Search box in the Files Page ')
 
         def fileItem = CustomKeywords.'customWait.WaitForElement.WaitForelementPresent'(newFileObj, 20, extentTest, fileName)
 
@@ -100,11 +101,11 @@ try {
 
             WebUI.click(newFileObj)
 
-            extentTest.log(LogStatus.PASS, 'Clicked on file ' + fileName)
+            extentTest.log(Status.PASS, 'Clicked on file ' + fileName)
 
             WebUI.rightClick(newFileObj)
 
-            extentTest.log(LogStatus.PASS, 'Right Clicked File to invoke context menu on  - ' + fileName)
+            extentTest.log(Status.PASS, 'Right Clicked File to invoke context menu on  - ' + fileName)
         }
     }
     
@@ -115,32 +116,37 @@ try {
         extentTest)
 
     if (result) {
-        extentTest.log(LogStatus.PASS, ('Verified - ' + TestCaseName) + '  Sucessfully')
+        extentTest.log(Status.PASS, ('Verified - ' + TestCaseName) + '  Sucessfully')
     } else {
-        extentTest.log(LogStatus.FAIL, TestCaseName + ' - failed')
+        extentTest.log(Status.FAIL, TestCaseName + ' - failed')
     }
 }
 catch (Exception ex) {
-    String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+	println('From TC - ' + GlobalVariable.G_ReportFolder)
 
-    WebUI.takeScreenshot(screenShotPath)
+	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
 
-    String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+	WebUI.takeScreenshot(screenShotPath)
 
-    extentTest.log(LogStatus.FAIL, ex)
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
 
-    extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(p))
-} 
-catch (StepErrorException e) {
-    String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+	extentTest.log(Status.FAIL, ex)
 
-    WebUI.takeScreenshot(screenShotPath)
-
-    extentTest.log(LogStatus.FAIL, e)
-} 
-finally { 
-    extent.endTest(extentTest)
-
-    extent.flush()
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
+catch (StepErrorException e) {
+	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
+	WebUI.takeScreenshot(screenShotPath)
+
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
+}
+finally {
+	extentTest.log(Status.PASS, 'Closing the browser after executing test case - ' + TestCaseName)
+	}
+
 

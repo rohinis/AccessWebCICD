@@ -6,7 +6,8 @@ import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 public class jobMonitorigColFilter {
 
@@ -21,9 +22,15 @@ public class jobMonitorigColFilter {
 		WebUI.click(findTestObject('PageNavigation/Preferences/Reset'))
 		WebUI.click(findTestObject('PageNavigation/Preferences/Confirm_button'))
 		WebUI.click(findTestObject('Object Repository/Landing_Page/LandigPage_AltairAccess_Link'))
-		extentTest.log(LogStatus.PASS, 'Reset prefrences ')
+		extentTest.log(Status.PASS, 'Reset prefrences ')
 
-		String [] ColName = ['Application', 'Queue', 'Status', 'User', 'Time']
+		String [] ColName = [
+			'Application',
+			'Queue',
+			'Status',
+			'User',
+			'Time'
+		]
 		String [] ColFilterLabel=[
 			'job_col_filter_application',
 			'job_col_filter_queueName',
@@ -52,7 +59,7 @@ public class jobMonitorigColFilter {
 			println('Filter - '+ name);
 			println('Col Lable - '+ColLable)
 			println ('ColCheckBx - '+ColCheckBx )
-			extentTest.log(LogStatus.PASS, 'Setting col - '+name)
+			extentTest.log(Status.PASS, 'Setting col - '+name)
 			//	WebUI.mouseOver(findTestObject('Object Repository/JobMonitoringPage/JM_column_selector_icon'))
 
 			WebUI.click(findTestObject('Object Repository/JobMonitoringPage/JM_column_selector_icon'))
@@ -71,14 +78,12 @@ public class jobMonitorigColFilter {
 			def isElementChecked=WebUI.verifyElementChecked(filterCB, 5, FailureHandling.CONTINUE_ON_FAILURE)
 			println (isElementChecked)
 			if(isElementChecked){
-				if(name.equals('User')||name.equals('Time'))
-				{
+				if(name.equals('User')||name.equals('Time')) {
 					println("Boxed checked")
 					WebUI.click(filterLabel)
 					WebUI.click(findTestObject('Object Repository/JobMonitoringPage/button_Apply'))
 				}
-				else
-				{
+				else {
 					println('nothing to do')
 					WebUI.click(findTestObject('Object Repository/JobMonitoringPage/button_Cancel'))
 				}

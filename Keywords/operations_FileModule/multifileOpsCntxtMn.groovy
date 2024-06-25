@@ -14,6 +14,8 @@ import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 import internal.GlobalVariable
 
@@ -26,7 +28,7 @@ public class multifileOpsCntxtMn {
 		def e2 =sdf.format(date)
 		def op =null
 		boolean result=false
-		def LogStatus = com.relevantcodes.extentreports.LogStatus
+		
 		def navlocation=(new generateFilePath.filePath()).execLocation()
 		def location=null
 		def y=null
@@ -39,7 +41,7 @@ public class multifileOpsCntxtMn {
 				def isElemenetPresent=null
 				TestObject newFileOp=WebUI.modifyObjectProperty(findTestObject('FilesPage/ContextMenu_FileOperation'), 'id', 'equals', Operation, true)
 				WebUI.click(newFileOp)
-				extentTest.log(LogStatus.PASS, 'Clicked on Context Menu Option for - '+Operation)
+				extentTest.log(Status.PASS, 'Clicked on Context Menu Option for - '+Operation)
 
 				def fileToCheck=null
 				if (TestCaseName.contains('tile view')) {
@@ -48,7 +50,7 @@ public class multifileOpsCntxtMn {
 					//WebUI.setText(findTestObject('Object Repository/FilesPage/textBx_FilePath'), location)
 					//WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
 
-					//extentTest.log(LogStatus.PASS, 'Navigated to '+location)
+					//extentTest.log(Status.PASS, 'Navigated to '+location)
 					(new generateFilePath.filePath()).navlocation(location, extentTest)
 					WebUI.delay(2)
 					y=5
@@ -60,7 +62,7 @@ public class multifileOpsCntxtMn {
 					/*WebUI.click(findTestObject('Object Repository/FilesPage/Icon_EditFilePath'))
 				 WebUI.setText(findTestObject('Object Repository/FilesPage/textBx_FilePath'), location)
 				 WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
-				 extentTest.log(LogStatus.PASS, 'Navigated to '+location)*/
+				 extentTest.log(Status.PASS, 'Navigated to '+location)*/
 
 					(new generateFilePath.filePath()).navlocation(location, extentTest)
 					WebUI.delay(2)
@@ -72,7 +74,7 @@ public class multifileOpsCntxtMn {
 				if(isElemenetPresent) {
 					WebUI.rightClick(findTestObject('FilesPage/Label_FolderEmpty'))
 				}
-				extentTest.log(LogStatus.PASS, 'Invoked context menu in Folder for pasting')
+				extentTest.log(Status.PASS, 'Invoked context menu in Folder for pasting')
 				WebUI.delay(2)
 				WebUI.click(findTestObject('FilesPage/ContextMenu_FileGrid_Paste'))
 
@@ -97,16 +99,16 @@ public class multifileOpsCntxtMn {
 				println listElement.size()
 				println("-------------------------------------")
 				def x=listElement.size()
-				extentTest.log(LogStatus.PASS, ' Number of files listied on this page - '+y)
-				extentTest.log(LogStatus.PASS, 'x- '+x)
-				extentTest.log(LogStatus.PASS, 'y- '+y)
+				extentTest.log(Status.PASS, ' Number of files listied on this page - '+y)
+				extentTest.log(Status.PASS, 'x- '+x)
+				extentTest.log(Status.PASS, 'y- '+y)
 
 				if(y>=x) {
-					extentTest.log(LogStatus.PASS, 'All the files are copied')
+					extentTest.log(Status.PASS, 'All the files are copied')
 					result = true
 				}
 				else {
-					extentTest.log(LogStatus.FAIL, 'All the files not are copied')
+					extentTest.log(Status.FAIL, 'All the files not are copied')
 					String screenShotPath = 'ExtentReports/' + GlobalVariable.G_Browser + '_MultiFileCopy_CntxtMenu.png'
 					WebUI.takeScreenshot(screenShotPath)
 					result=false
@@ -119,7 +121,7 @@ public class multifileOpsCntxtMn {
 				def isElemenetPresent
 				TestObject newFileOp=WebUI.modifyObjectProperty(findTestObject('FilesPage/ContextMenu_FileOperation'), 'id', 'equals', Operation, true)
 				WebUI.click(newFileOp)
-				extentTest.log(LogStatus.PASS, 'Clicked on context menu option for '+op)
+				extentTest.log(Status.PASS, 'Clicked on context menu option for '+op)
 
 
 				if (TestCaseName.contains('tile view')) {
@@ -127,7 +129,7 @@ public class multifileOpsCntxtMn {
 					/*WebUI.click(findTestObject('Object Repository/FilesPage/Icon_EditFilePath'))
 				 WebUI.setText(findTestObject('Object Repository/FilesPage/textBx_FilePath'), location)
 				 WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
-				 extentTest.log(LogStatus.PASS, 'Navigated to '+location)*/
+				 extentTest.log(Status.PASS, 'Navigated to '+location)*/
 					(new generateFilePath.filePath()).navlocation(location, extentTest)
 					WebUI.delay(2)
 					y=5
@@ -139,7 +141,7 @@ public class multifileOpsCntxtMn {
 					/*	WebUI.click(findTestObject('Object Repository/FilesPage/Icon_EditFilePath'))
 				 WebUI.setText(findTestObject('Object Repository/FilesPage/textBx_FilePath'), location)
 				 WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))
-				 //extentTest.log(LogStatus.PASS, 'Navigated to '+location)*/
+				 //extentTest.log(Status.PASS, 'Navigated to '+location)*/
 
 					(new generateFilePath.filePath()).navlocation(location, extentTest)
 					WebUI.delay(2)
@@ -154,7 +156,7 @@ public class multifileOpsCntxtMn {
 				else {
 					WebUI.rightClick(findTestObject('Object Repository/FilesPage/Canvas_FilesPage_TileView'))
 				}
-				extentTest.log(LogStatus.PASS, 'Invoked context menu in Folder for pasting')
+				extentTest.log(Status.PASS, 'Invoked context menu in Folder for pasting')
 				WebUI.delay(2)
 				WebUI.click(findTestObject('FilesPage/ContextMenu_FileGrid_Paste'))
 
@@ -179,14 +181,14 @@ public class multifileOpsCntxtMn {
 				println listElement.size()
 				println("-------------------------------------")
 				def x=listElement.size()
-				extentTest.log(LogStatus.PASS, ' Number of files listied on this page - '+x)
+				extentTest.log(Status.PASS, ' Number of files listied on this page - '+x)
 
 				if(x<=y) {
-					extentTest.log(LogStatus.PASS, 'All the files are pasted ')
+					extentTest.log(Status.PASS, 'All the files are pasted ')
 					result = true
 				}
 				else {
-					extentTest.log(LogStatus.FAIL, 'All the files not are pasted')
+					extentTest.log(Status.FAIL, 'All the files not are pasted')
 					result=false
 				}
 				return result
@@ -205,9 +207,9 @@ public class multifileOpsCntxtMn {
 					WebUI.click(newFileOp)
 					WebUI.delay(2)
 				}
-				extentTest.log(LogStatus.PASS, 'Clicked on context menu for -'+op)
+				extentTest.log(Status.PASS, 'Clicked on context menu for -'+op)
 				WebUI.click(findTestObject('GenericObjects/btn_Yes'))
-				extentTest.log(LogStatus.PASS, 'Clicked on Yes on Delete confirmation pop-up ')
+				extentTest.log(Status.PASS, 'Clicked on Yes on Delete confirmation pop-up ')
 				msg = '5 item deleted successfully'
 				(new operations_FileModule.notifications()).getNotifications(msg,extentTest)
 				String myXpath=null;
@@ -229,14 +231,14 @@ public class multifileOpsCntxtMn {
 				println listElement.size()
 				println("-------------------------------------")
 				def x=listElement.size()
-				extentTest.log(LogStatus.PASS, ' Number of files listied on this page - '+x)
+				extentTest.log(Status.PASS, ' Number of files listied on this page - '+x)
 
 				if(x==y) {
-					extentTest.log(LogStatus.PASS, 'All the files are deleted ')
+					extentTest.log(Status.PASS, 'All the files are deleted ')
 					result = true
 				}
 				else {
-					extentTest.log(LogStatus.FAIL, 'All the files not are deleted')
+					extentTest.log(Status.FAIL, 'All the files not are deleted')
 					result=false
 				}
 
@@ -247,7 +249,7 @@ public class multifileOpsCntxtMn {
 				op='Compress'
 				WebUI.click(findTestObject('FilesPage/ContextMenu_FileGrid_Compress'))
 				WebUI.delay(5)
-				extentTest.log(LogStatus.PASS, 'Clicked on Context Menu Option for - '+Operation)
+				extentTest.log(Status.PASS, 'Clicked on Context Menu Option for - '+Operation)
 				println"Clicked Compress"
 				if (TestCaseName.contains('tile view')) {
 
@@ -255,7 +257,7 @@ public class multifileOpsCntxtMn {
 					WebUI.delay(3)
 					WebUI.mouseOver(findTestObject("Object Repository/FilesPage/SortList-Option"))
 					WebUI.click(findTestObject("Object Repository/FilesPage/SortList-Option"))
-					extentTest.log(LogStatus.PASS, 'Sorted the listed files by created on, in tile view')
+					extentTest.log(Status.PASS, 'Sorted the listed files by created on, in tile view')
 
 					TestObject sortIconDown=WebUI.modifyObjectProperty(findTestObject('Object Repository/FilesPage/SortBy-Order'), 'class', 'equals',"down-arrow tile-sortable-icon focus_enable_class", true)
 					def sortIconUp=WebUI.waitForElementPresent(findTestObject('Object Repository/FilesPage/SortBy-Order'), 3, FailureHandling.CONTINUE_ON_FAILURE)
@@ -302,7 +304,7 @@ public class multifileOpsCntxtMn {
 				if(compressedFile) {
 					WebUI.click(findTestObject('FilesPage/ContextMenu_FileGrid_UnCompress'))
 				}
-				extentTest.log(LogStatus.PASS, 'Clicked on menu item Un-Compress on file - '+compressedFileName)
+				extentTest.log(Status.PASS, 'Clicked on menu item Un-Compress on file - '+compressedFileName)
 				result=(new operations_FileModule.multiFileCompress()).VerifyUnCompressedFile(compressedFileName , TestCaseName ,extentTest)
 				WebUI.delay(4)
 				String myXpath
@@ -323,14 +325,14 @@ public class multifileOpsCntxtMn {
 				println listElement.size()
 				println("-------------------------------------")
 				def x=listElement.size()
-				extentTest.log(LogStatus.PASS, ' Number of files listied on this page - '+x)
+				extentTest.log(Status.PASS, ' Number of files listied on this page - '+x)
 
 				if(x==y) {
-					extentTest.log(LogStatus.PASS, 'All the files are present after uncompress ')
+					extentTest.log(Status.PASS, 'All the files are present after uncompress ')
 					result = true
 				}
 				else {
-					extentTest.log(LogStatus.FAIL, 'All the files not are present after uncompress')
+					extentTest.log(Status.FAIL, 'All the files not are present after uncompress')
 					result=false
 				}
 
@@ -355,7 +357,7 @@ public class multifileOpsCntxtMn {
 
 				if (namesOfFiles.contains('ToDownload.txt')) {
 					println('success')
-					//extentTest.log(LogStatus.PASS, 'file to downloaded ')
+					//extentTest.log(Status.PASS, 'file to downloaded ')
 				} else {
 					println('fail')
 				}

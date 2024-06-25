@@ -54,8 +54,8 @@
          <combinationType>ONE</combinationType>
          <id>98ae1009-2546-4b35-82a6-c39fc1879f15</id>
          <iterationEntity>
-            <iterationType>RANGE</iterationType>
-            <value>9-15</value>
+            <iterationType>SPECIFIC</iterationType>
+            <value>1-15</value>
          </iterationEntity>
          <testDataId>Data Files/Sanity/FilesOps</testDataId>
       </testDataLink>

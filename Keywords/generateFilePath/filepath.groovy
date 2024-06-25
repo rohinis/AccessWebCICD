@@ -8,7 +8,8 @@ import org.openqa.selenium.Keys
 
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.relevantcodes.extentreports.LogStatus as LogStatus
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 public class filePath {
 
@@ -33,7 +34,7 @@ public class filePath {
 		WebUI.delay(2)
 		WebUI.sendKeys(findTestObject('Object Repository/FilesPage/gotofoldertext'), Keys.chord(Keys.ENTER))
 
-		extentTest.log(LogStatus.PASS, 'Navigated to ' + location)
+		extentTest.log(Status.PASS, 'Navigated to ' + location)
 	}
 
 

@@ -39,8 +39,8 @@
          <combinationType>ONE</combinationType>
          <id>cd8a1afb-94df-4f49-92b6-271051e94843</id>
          <iterationEntity>
-            <iterationType>ALL</iterationType>
-            <value></value>
+            <iterationType>SPECIFIC</iterationType>
+            <value>8,9</value>
          </iterationEntity>
          <testDataId>Data Files/Regression/TestDataForBookMarks</testDataId>
       </testDataLink>

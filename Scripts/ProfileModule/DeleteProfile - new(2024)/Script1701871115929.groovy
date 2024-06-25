@@ -22,6 +22,8 @@ import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
+import com.aventstack.extentreports.Status
+import com.aventstack.extentreports.MediaEntityBuilder
 
 import internal.GlobalVariable as GlobalVariable
 
@@ -31,11 +33,11 @@ EventFiringWebDriver eventFiring = ((DriverFactory.getWebDriver()) as EventFirin
 WebDriver wrappedWebDriver = eventFiring.getWrappedDriver()
 //RemoteWebDriver katalonWebDriver = ((wrappedWebDriver) as RemoteWebDriver)
 //====================================================================================
-ReportFile = (GlobalVariable.G_ReportName + '.html')
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-TestCaseName='Test Case to delete profile - '+proName
-def extentTest = extent.startTest(TestCaseName)
+
+def Browser = GlobalVariable.G_Browser
+//===============================================================
+def extentTest=GlobalVariable.G_ExtentTest
+
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
 //=====================================================================================
 def navLocation = CustomKeywords.'generateFilePath.filePath.execLocation'()
@@ -60,7 +62,7 @@ try
 	TestObject newAppObj = WebUI.modifyObjectProperty(findTestObject('LoginPage/NewJobPage/AppList_ShellScript'), 'id', 'equals', AppName, true)
 
 	WebUI.click(newAppObj)
-	extentTest.log(LogStatus.PASS, 'Navigated to Job Submission form for - '+AppName )
+	extentTest.log(Status.PASS, 'Navigated to Job Submission form for - '+AppName )
 
 	//WebUI.delay(2)
 
@@ -96,7 +98,7 @@ try
 	//jse1.executeScript("arguments[0].click()", ele1);
 	WebUI.delay(2)
 	WebUI.click(findTestObject('Object Repository/ProfileOptions/delete_Btn'))
-	extentTest.log(LogStatus.PASS, 'clicked on delete option for the - '+ proName)
+	extentTest.log(Status.PASS, 'clicked on delete option for the - '+ proName)
 	
 	boolean delProf=WebUI.verifyElementPresent(findTestObject('Object Repository/ProfileOptions/delete_Profile'), 4)
 	if(delProf) {
@@ -107,15 +109,15 @@ try
 	}
 	
 	/*def deleteOption = CustomKeywords.'customWait.WaitForElement.WaitForelementPresent'(findTestObject('ProfileOptions/Icon_Delete_Profile'),5,extentTest,'DeleteOption')
-	extentTest.log(LogStatus.PASS, 'Loaded Profile -  '+proName )
+	extentTest.log(Status.PASS, 'Loaded Profile -  '+proName )
 
 	if (deleteOption) {
-		extentTest.log(LogStatus.PASS, 'Test to verify delete option exists - Pass ')
+		extentTest.log(Status.PASS, 'Test to verify delete option exists - Pass ')
 
 		WebUI.mouseOver(findTestObject('ProfileOptions/Icon_Delete_Profile'))
 		WebUI.delay(2)
 		WebUI.click(findTestObject('ProfileOptions/Icon_Delete_Profile'))
-		extentTest.log(LogStatus.PASS, 'Clicked on Delete ')
+		extentTest.log(Status.PASS, 'Clicked on Delete ')
 		WebUI.delay(3)
 		WebUI.click(findTestObject('GenericObjects/btn_Yes'))
 		WebUI.delay(2)
@@ -128,17 +130,17 @@ try
 			//if(cancelBtn) {
 			WebUI.click(findTestObject('Object Repository/LoginPage/NewJobPage/button_Cancel'))
 			//}
-			extentTest.log(LogStatus.PASS, 'Clicked on Save As ')
-			extentTest.log(LogStatus.PASS, 'Entered profile name -  '+proName)
-			extentTest.log(LogStatus.PASS, 'Profile Creation Option Selected - '+ProfileType)
+			extentTest.log(Status.PASS, 'Clicked on Save As ')
+			extentTest.log(Status.PASS, 'Entered profile name -  '+proName)
+			extentTest.log(Status.PASS, 'Profile Creation Option Selected - '+ProfileType)
 			/*def isProfilePersentProCan = WebUI.verifyElementPresent(LeftNavAppIdentifier, 3,FailureHandling.CONTINUE_ON_FAILURE)
 			if(isProfilePersentProCan)
 			{
-				extentTest.log(LogStatus.PASS, 'Profile not created - '+ proName)
+				extentTest.log(Status.PASS, 'Profile not created - '+ proName)
 			}
 			else
 			{
-				extentTest.log(LogStatus.PASS, 'Profile not created - '+ proName)
+				extentTest.log(Status.PASS, 'Profile not created - '+ proName)
 			}*/
 		
 
@@ -150,13 +152,13 @@ try
 	//println(result)
 	if (result || result1)
 	{
-		extentTest.log(LogStatus.FAIL,'Profile not deleted')
-		//extentTest.log(LogStatus.FAIL, ( TestCaseName) + ' :: failed')
+		extentTest.log(Status.FAIL,'Profile not deleted')
+		//extentTest.log(Status.FAIL, ( TestCaseName) + ' :: failed')
 
 	}
 	else {
-		extentTest.log(LogStatus.PASS, 'Deleted Profile - '+proName )
-		extentTest.log(LogStatus.PASS, ('Verified ::  ' + TestCaseName) + ' :: Sucessfully')
+		extentTest.log(Status.PASS, 'Deleted Profile - '+proName )
+		extentTest.log(Status.PASS, ('Verified ::  ' + TestCaseName) + ' :: Sucessfully')
 
 	}
 		}
@@ -164,21 +166,32 @@ try
 		
 }
 catch (Exception ex) {
+	println('From TC - ' + GlobalVariable.G_ReportFolder)
+ 
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+ 
 	WebUI.takeScreenshot(screenShotPath)
+ 
 	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
-	extentTest.log(LogStatus.FAIL, ex)
-	extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(p))
+ 
+	extentTest.log(Status.FAIL, ex)
+ 
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 catch (StepErrorException e) {
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+ 
 	WebUI.takeScreenshot(screenShotPath)
-	extentTest.log(LogStatus.FAIL, e)
+ 
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+ 
+	extentTest.log(Status.FAIL, ex)
+ 
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 finally {
-	extentTest.log(LogStatus.PASS, 'Closing the browser after executinge test case - '+ TestCaseName)
-	extent.endTest(extentTest)
-	extent.flush()
+	extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
+
 }
-//=====================================================================================
+ 
 

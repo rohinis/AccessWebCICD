@@ -38,7 +38,7 @@ public class CreateJobSubmissionObjs {
 		//a[@class='active  focus_enable_class'][contains(text(),'Output')]
 		String p1 = "//li[@ id='app_output_tab'][contains(text(),'"
 		if(Folder =="Input") {
-			 p1 = "//li[@id='app_input_tab'][contains(text(),'"
+			p1 = "//li[@id='app_input_tab'][contains(text(),'"
 		}
 		if(Folder =="Running") {
 			p1 = "//li[@id='app_running folder_tab'][contains(text(),'"

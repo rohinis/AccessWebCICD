@@ -37,7 +37,7 @@
       <name>jobState</name>
    </variable>
    <variable>
-      <defaultValue>'Open'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
       <id>b07c6840-6124-403c-88c8-73fd685aac37</id>
       <masked>false</masked>

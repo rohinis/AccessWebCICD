@@ -307,7 +307,7 @@
       <guid>313b1324-604c-4f7b-82e0-1ae6148235bc</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/JobSubmission/JobSubmission_Reset</testCaseId>
+      <testCaseId>Test Cases/XRepeated_TC/JobSubmission_Reset</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
          <id>05809abe-3c2a-4959-9487-d5ff900be00f</id>

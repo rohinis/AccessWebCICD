@@ -9,17 +9,17 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.util.KeywordUtil as KeywordUtil
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.relevantcodes.extentreports.LogStatus
+import com.aventstack.extentreports.MediaEntityBuilder
+import com.aventstack.extentreports.Status
 
 import internal.GlobalVariable as GlobalVariable
-
-//====================================================================================
-ReportFile = 'PreReq-Report.html'
-def extent = CustomKeywords.'generateReports.GenerateReport.create'(ReportFile, GlobalVariable.G_Browser, GlobalVariable.G_BrowserVersion)
-def LogStatus = com.relevantcodes.extentreports.LogStatus
-def extentTest = extent.startTest(TestCaseName)
+//==================================================================
+def Browser = GlobalVariable.G_Browser
+//===============================================================
+def extentTest=GlobalVariable.G_ExtentTest
+//===========================================================
 CustomKeywords.'toLogin.ForLogin.Login'(extentTest)
-//=====================================================================================
+
 def navLocation =CustomKeywords.'generateFilePath.filePath.execLocation'()
 def location=navLocation+'/ForJM/InputDeck'
 println('##################################################################')
@@ -37,13 +37,13 @@ try {
 	if (jobsTab) {
 		WebUI.click(findTestObject('GenericObjects/TitleLink_Jobs'))
 		}
-	extentTest.log(LogStatus.PASS, 'navigated to jobs tab')
+	extentTest.log(Status.PASS, 'navigated to jobs tab')
 
 	TestObject newAppObj =  WebUI.modifyObjectProperty(findTestObject('LoginPage/NewJobPage/AppList_ShellScript'),  'id', 'equals', AppName, true)
 
 	WebUI.click(newAppObj)
 
-	extentTest.log(LogStatus.PASS, 'navigated to job submission page ')
+	extentTest.log(Status.PASS, 'navigated to job submission page ')
 	for (int x=0;x<4;x++)
 	{
 
@@ -81,7 +81,7 @@ try {
 
 		TestObject LeftNavAppIdentifier = CustomKeywords.'buildTestObj.CreateTestObjJobs.leftNavAppIdentifier'( NewApp)
 		WebUI.click(LeftNavAppIdentifier)
-		extentTest.log(LogStatus.PASS, 'loaded job submission form for - '+NewApp)
+		extentTest.log(Status.PASS, 'loaded job submission form for - '+NewApp)
 		WebUI.delay(2)
 	/*	WebUI.scrollToElement(findTestObject('Object Repository/JobSubmissionForm/Link_ResetLink'), 3,  FailureHandling.STOP_ON_FAILURE)
 		WebUI.click(findTestObject('Object Repository/JobSubmissionForm/Link_ResetLink'))
@@ -92,14 +92,14 @@ try {
 		WebUI.sendKeys(findTestObject('Object Repository/FilesPage/textBx_FilePath'), Keys.chord(Keys.ENTER))*/
 		CustomKeywords.'generateFilePath.filePath.navlocation'(location, extentTest)
 
-		extentTest.log(LogStatus.PASS, 'navigated to - '+location+' in JS-RFB')
+		extentTest.log(Status.PASS, 'navigated to - '+location+' in JS-RFB')
 		CustomKeywords.'operations_JobsModule.JobSubmissions.JSAllFileds'('NCPU', '2', extentTest)
 
 		if(NewApp=='radioss-smp')
 		{
 			WebUI.click(findTestObject('JobSubmissionForm/List_NCPUS'))
 			WebUI.setText(findTestObject('JobSubmissionForm/List_NCPUS'),'200')
-			extentTest.log(LogStatus.PASS, 'Changed the NCPU value to - 200 for Radioss-SMP')
+			extentTest.log(Status.PASS, 'Changed the NCPU value to - 200 for Radioss-SMP')
 
 			WebUI.click(findTestObject('JobSubmissionForm/RadioBtn_All Fields'))
 			WebUI.scrollToElement(findTestObject('JobSubmissionForm/label_Queue'), 5)
@@ -107,7 +107,7 @@ try {
 			TestObject newQueueObj = WebUI.modifyObjectProperty(findTestObject('JobSubmissionForm/dropDown_version'), 'text', 'equals','compute', true)
 			WebUI.mouseOver(newQueueObj)
 			WebUI.click(newQueueObj)
-			extentTest.log(LogStatus.PASS, 'Changed the queue to - compute')
+			extentTest.log(Status.PASS, 'Changed the queue to - compute')
 		}
 
 
@@ -116,29 +116,29 @@ try {
 		WebUI.click(findTestObject('Object Repository/JobSubmissionForm/textBx_file_filter'))
 		WebUI.setText(findTestObject('Object Repository/JobSubmissionForm/textBx_file_filter'), InputFile)
 		WebUI.sendKeys(findTestObject('JobSubmissionForm/textBx_file_filter'), Keys.chord(Keys.ENTER))
-		extentTest.log(LogStatus.PASS, 'Searched for input	  file - '+InputFile)
+		extentTest.log(Status.PASS, 'Searched for input	  file - '+InputFile)
 		WebUI.delay(3)
 		TestObject newFileObj =  WebUI.modifyObjectProperty(findTestObject('JobSubmissionForm/File_InputFile'), 'data-automation-id', 'equals',InputFile, true)
 		WebUI.click(newFileObj)
 		WebUI.rightClick(newFileObj)
-		extentTest.log(LogStatus.PASS, 'Right Clicked on  Input file ' + InputFile)
+		extentTest.log(Status.PASS, 'Right Clicked on  Input file ' + InputFile)
 		WebUI.delay(2)
 		newRFBContextMnOption = WebUI.modifyObjectProperty(findTestObject('Object Repository/LoginPage/NewJobPage/ContextMenu_RFB_FilePicker'),'id', 'equals', idForCntxtMn, true)
 		WebUI.click(newRFBContextMnOption)
-		extentTest.log(LogStatus.PASS, 'Clicked on context menu - ' + idForCntxtMn)
+		extentTest.log(Status.PASS, 'Clicked on context menu - ' + idForCntxtMn)
 
 
 		for (int i =0 ; i<4 ;i++) { def submitBtn =
 			CustomKeywords.'customWait.WaitForElement.WaitForelementPresent'(  findTestObject('JobSubmissionForm/button_Submit_Job'),10, extentTest, 'Submit Button')
 			if (submitBtn) {
 				WebUI.click(findTestObject('JobSubmissionForm/button_Submit_Job'))
-				extentTest.log(LogStatus.PASS, 'Clicked on Submit Button ')
+				extentTest.log(Status.PASS, 'Clicked on Submit Button ')
 			}
 			WebUI.waitForElementPresent(findTestObject('Notificactions/Notification_JobSubmission'), 5)
 			def jobText =  WebUI.getText(findTestObject('Notificactions/Notification_JobSubmission'))
-			extentTest.log(LogStatus.PASS, 'Notification Generated')
+			extentTest.log(Status.PASS, 'Notification Generated')
 			def jobID=CustomKeywords.'operations_JobsModule.GetJobRowDetails.getJobID'( jobText)
-			extentTest.log(LogStatus.PASS, 'Job Number - '+i+' Job ID - ' +  jobID)
+			extentTest.log(Status.PASS, 'Job Number - '+i+' Job ID - ' +  jobID)
 		}
 
 	}
@@ -148,20 +148,40 @@ try {
 }
 catch (Exception ex) {
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
 	WebUI.takeScreenshot(screenShotPath)
+
+	extentTest.log(Status.FAIL, ex)
+
+	KeywordUtil.markFailed('ERROR: ' + e)
+}
+catch (Exception ex) {
+	println('From TC - ' + GlobalVariable.G_ReportFolder)
+
+	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
+	WebUI.takeScreenshot(screenShotPath)
+
 	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
-	extentTest.log(LogStatus.FAIL, ex)
-	extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(p))
+
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 catch (StepErrorException e) {
 	String screenShotPath = (('ExtentReports/' + TestCaseName) + GlobalVariable.G_Browser) + '.png'
+
 	WebUI.takeScreenshot(screenShotPath)
-	extentTest.log(LogStatus.FAIL, e)
+
+	String p = (TestCaseName + GlobalVariable.G_Browser) + '.png'
+
+	extentTest.log(Status.FAIL, ex)
+
+	extentTest.fail(MediaEntityBuilder.createScreenCaptureFromPath(p).build())
 }
 finally {
-	extentTest.log(LogStatus.PASS, 'Closing the browser after executinge test case - '+ TestCaseName)
-	extent.endTest(extentTest)
-	extent.flush()
+	extentTest.log(Status.PASS, 'Closing the browser after executinge test case - ' + TestCaseName)
+	
+	
 }
-//=====================================================================================
 

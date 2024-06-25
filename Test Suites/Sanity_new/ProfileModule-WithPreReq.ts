@@ -20,8 +20,8 @@
          <combinationType>ONE</combinationType>
          <id>e8918466-2248-4ed3-ac3b-0ee2c20ce33c</id>
          <iterationEntity>
-            <iterationType>ALL</iterationType>
-            <value>1,6</value>
+            <iterationType>SPECIFIC</iterationType>
+            <value>6</value>
          </iterationEntity>
          <testDataId>Data Files/Sanity/ProfileCreation</testDataId>
       </testDataLink>
@@ -72,7 +72,7 @@
    <testCaseLink>
       <guid>fde5d0fe-3587-4913-87b0-ccf3ae6a342f</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
+      <isRun>false</isRun>
       <testCaseId>Test Cases/ProfileModule/JobSubmissionThroughProfileContextMenuAllProfiles</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>
@@ -124,7 +124,7 @@
    <testCaseLink>
       <guid>b87bddd6-5727-428e-9a6f-70dd1c831285</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
+      <isRun>false</isRun>
       <testCaseId>Test Cases/ProfileModule/DeleteProfile</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>

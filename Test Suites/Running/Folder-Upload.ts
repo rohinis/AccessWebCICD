@@ -21,7 +21,7 @@
          <id>d2e26d04-8888-444a-9861-b225c2407626</id>
          <iterationEntity>
             <iterationType>ALL</iterationType>
-            <value>4</value>
+            <value>5,6</value>
          </iterationEntity>
          <testDataId>Data Files/Upload/FileFolder-Upload</testDataId>
       </testDataLink>
